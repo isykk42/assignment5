@@ -24,3 +24,10 @@ def delete(db: Session, sandwich_id):
     db_sandwich.delete(synchronize_session=False)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+def read_all(db: Session):
+    return db.query(models.Sandwich).all()
+
+
+def read_one(db: Session, sandwich_id):
+    return db.query(models.Sandwich).filter(models.Sandwich.id == sandwich_id).first()
