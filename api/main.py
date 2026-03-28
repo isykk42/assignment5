@@ -61,3 +61,10 @@ def create_sandwich(sandwich: schemas.SandwichCreate, db: Session = Depends(get_
 @app.get("/sandwiches/", response_model=list[schemas.Sandwich], tags=["Sandwiches"])
 def read_sandwiches(db: Session = Depends(get_db)):
     return sandwiches.read_all(db)
+
+@app.get("/sandwiches/{sandwich_id}", response_model=schemas.Sandwich, tags=["Sandwiches"])
+def read_one_sandwich(sandwich_id: int, db: Session = Depends(get_db)):
+    sandwich = sandwiches.read_one(db, sandwich_id=sandwich_id)
+    if sandwich is None:
+        raise HTTPException(status_code=404, detail="Sandwich not found")
+    return sandwich
