@@ -18,3 +18,9 @@ def update(db: Session, sandwich_id, sandwich):
     db_sandwich.update(update_data, synchronize_session=False)
     db.commit()
     return db_sandwich.first()
+
+def delete(db: Session, sandwich_id):
+    db_sandwich = db.query(models.Sandwich).filter(models.Sandwich.id == sandwich_id)
+    db_sandwich.delete(synchronize_session=False)
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
